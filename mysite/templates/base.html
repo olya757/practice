@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% block title %} TRADINGS {% endblock %}</title>
+  <title></title>
   <!-- fonts   -->
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   <!-- styles cdn -->
@@ -12,7 +12,9 @@
   <!-- local styles -->
 </head>
 <body>
-
+<div class="container">
+{% block title %}  {% endblock %}
+</div>
 <div class="container">
   {% block content %}
   {% endblock %}

@@ -1,8 +1,6 @@
 <!-- templates/home.html -->
-
-{% block title %}Home{% endblock %}
-
-{% block content %}
+{% extends 'base.html' %}
+{% block title %}
 {% if user.is_authenticated %}
   Здравствуйте, {{user}}!
 
@@ -11,6 +9,10 @@
   <p><a href="{% url 'login'%}" >Войти</a>|
   <a href="{% url 'signup' %}">Регистрация</a>
 {%endif%}
+{% endblock %}
+
+{% block content %}
+
 
 <div>
     <p>{{subject}}</p>

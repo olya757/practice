@@ -1,5 +1,9 @@
+{% extends 'base.html' %}
 
-{% block title %}Login{% endblock %}
+{% block title %}
+<p><a href="{% url 'home'%}" >Назад</a>|
+  <a href="{% url 'signup' %}">Регистрация</a></p>
+{% endblock %}
 
 {% block content %}
 <h2>Login</h2>
@@ -8,6 +12,5 @@
   {{ form.as_p }}
   <button type="submit">Login</button>
 </form>
-<p><a href="{% url 'home'%}" >Назад</a>|
-  <a href="{% url 'signup' %}">Регистрация</a>
+
 {% endblock %}

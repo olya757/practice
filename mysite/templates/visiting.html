@@ -1,9 +1,7 @@
 <!-- templates/home.html -->
+{% extends 'base.html' %}
 
-
-{% block title %}Home{% endblock %}
-
-{% block content %}
+{% block title %}
 {% if user.is_authenticated %}
   Здравствуйте, {{user}}!
 
@@ -11,7 +9,9 @@
 {% else %}
   <p><a href="{% url 'login'%}" >Войти</a>|
   <a href="{% url 'signup' %}">Регистрация</a>
-{%endif%}
+{%endif%}{% endblock %}
+
+{% block content %}
   <form method="post" action="{% url 'save' gc.id date %}">
     {% csrf_token %}
 
