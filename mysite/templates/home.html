@@ -1,0 +1,40 @@
+<!-- templates/home.html -->
+
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+  Здравствуйте, {{user}}!
+
+  <p><a href="{% url 'logout' %}">Выйти</a></p>
+{% else %}
+  <p><a href="{% url 'login'%}" >Войти</a>|
+  <a href="{% url 'signup' %}">Регистрация</a>
+{%endif%}
+
+
+<form method="post" action="{% url 'select_in_home'%}">
+    {% csrf_token %}
+    <fieldset>
+    {% if groups %}
+        <select id="group_elem" name="group_elem">
+            {% for gr in groups %}
+            <option value="{{gr.id}}">{{gr.group}}&nbsp;&ndash; {{gr.curriculum}}&nbsp;&ndash; {{gr.semester}}</option>
+            {% endfor %}
+        </select>
+        {% if user.is_authenticated%}
+        <input id="date" name="date" type="date" value="{{today}}">
+        {% endif%}
+        <button type="submit">Показать</button>
+  {% endif %}
+    </fieldset>
+</form>
+
+
+<form method="post" name="">
+
+</form>
+
+
+{% endblock %}

@@ -44,7 +44,7 @@ class Student(models.Model):
     group = models.ForeignKey(Group, on_delete=models.SET_NULL, null=True, verbose_name='Группа')
 
     def __str__(self):
-        return str(self.surname) + ' ' + str(self.name) + ' ' + str(self.second_name) + ' '+str(self.group)
+        return str(self.surname) + ' ' + str(self.name) + ' ' + str(self.second_name)+' '+str(self.group)
 
 
 # курс лекций
@@ -69,6 +69,9 @@ class GroupCurriculum(models.Model):
     )
     type = models.IntegerField(choices=TYPE_OF_CLASS,default=2,verbose_name='Тип занятия')
 
+    def __str__(self):
+        return str(self.curriculum)+'\n '+str(self.group)+'\n '+str(self.semester) + ' семестр\n' + self.TYPE_OF_CLASS[int(str(self.type))][1]
+
     def get_group(self):
         return self.group
 
@@ -76,5 +79,8 @@ class GroupCurriculum(models.Model):
 class Visit(models.Model):
     group_curriculum = models.ForeignKey(GroupCurriculum, verbose_name='Учебный курс', on_delete=models.SET_NULL,null=True)
     student = models.ForeignKey(Student, on_delete=models.SET_NULL, null=True, verbose_name='Студент')
-    date = models.DateTimeField(verbose_name='Дата и время')
+    date = models.DateField(verbose_name='Дата')
     visit = models.BooleanField(verbose_name="Посетил")
+
+    def __str__(self):
+        return str(self.group_curriculum)+'\n '+str(self.student)+'\n'+str(self.date)+'\n'+str(self.visit)

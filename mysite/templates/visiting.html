@@ -1,0 +1,47 @@
+<!-- templates/home.html -->
+
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+  Здравствуйте, {{user}}!
+
+  <p><a href="{% url 'logout' %}">Выйти</a></p>
+{% else %}
+  <p><a href="{% url 'login'%}" >Войти</a>|
+  <a href="{% url 'signup' %}">Регистрация</a>
+{%endif%}
+  <form method="post" action="{% url 'save' gc.id date %}">
+    {% csrf_token %}
+
+    <div data-model-name="date">{{date}}</div>
+    <div data-model-name="gc" >{{gc}}</div>
+
+    <fieldset>
+
+  {% if students %}
+    <table>
+        <thead>
+        <tr>
+        <td>Студент</td>
+        <td>Посещение</td>
+        </tr>
+        </thead>
+        {% for st in students %}
+       <tr>
+           <td>
+               {{st}}
+           </td>
+           <td >
+               <input type="checkbox" name="{{st.id}}" id="{{st.id}}" >
+           </td>
+       </tr>
+        {% endfor %}
+    </table>
+  {% endif %}
+    </fieldset>
+    <button type="submit">Сохранить</button>
+</form>
+<p><a href="{% url 'home'%}">Назад</a></p>
+{% endblock %}
