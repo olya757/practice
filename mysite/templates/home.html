@@ -3,12 +3,11 @@
 
 {% block title %}
 {% if user.is_authenticated %}
-  Здравствуйте, {{user}}!
 
-  <p><a href="{% url 'logout' %}">Выйти</a></p>
+ <div class="moves">{{user.username}}</div>|<div class="moves"><a href="{% url 'logout' %}">Выйти</a></div>
 {% else %}
-  <p><a href="{% url 'login'%}" >Войти</a>|
-  <a href="{% url 'signup' %}">Регистрация</a>
+<div class="moves"><a href="{% url 'login'%}" >Войти</a></div>|<div class="moves">
+      <a href="{% url 'signup' %}">Регистрация</a></div>
 {%endif%}{% endblock %}
 
 {% block content %}
@@ -17,7 +16,6 @@
 
 <form method="post" action="{% url 'select_in_home'%}">
     {% csrf_token %}
-    <fieldset>
     {% if groups %}
         <select id="group_elem" name="group_elem">
             {% for gr in groups %}
@@ -31,7 +29,6 @@
     {% else%}
         Нет ни одного учебного курса
     {% endif %}
-    </fieldset>
 </form>
 
 {% endblock %}

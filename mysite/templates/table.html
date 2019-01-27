@@ -2,27 +2,28 @@
 {% extends 'base.html' %}
 {% block title %}
 {% if user.is_authenticated %}
-  Здравствуйте, {{user}}!
 
-  <p><a href="{% url 'logout' %}">Выйти</a></p>
+  <div class="moves">{{user.username}}</div>| <div class="moves"><a href="{% url 'logout' %}">Выйти</a></div>
 {% else %}
-  <p><a href="{% url 'login'%}" >Войти</a>|
-  <a href="{% url 'signup' %}">Регистрация</a>
+<div class="moves"><a href="{% url 'login'%}" >Войти</a></div>|<div class="moves">
+      <a href="{% url 'signup' %}">Регистрация</a></div>
 {%endif%}
 {% endblock %}
 
 {% block content %}
 
-
-<div>
-    <p>{{subject}}</p>
+    <p>Преподаватель: {{subject.curriculum.teacher}}</p>
+    <p>Предмет: {{subject.curriculum.subject}}</p>
+    <p>Группа: {{subject.group}}</p>
+      <p>Тип занятий: {{type}}</p>
+      <p>Семестр: {{subject.semester}}</p>
 {% if values%}
     <table>
         <thead>
         <tr>
-        <td>Студент</td>
+        <th>Студент</th>
             {% for d in dates%}
-        <td>{{d}}</td>
+        <th>{{d}}</th>
             {% endfor %}
 
         </tr>
@@ -36,9 +37,9 @@
            {% for res in vis %}
            <td>
                {%if not res%}
-               отсутствовал
+               -
                {% else%}
-               присутствовал
+               +
                {% endif%}
            </td>
            {%endfor%}
@@ -48,6 +49,5 @@
 {%else%}
     нет информации
 {% endif%}
-</div>
-<p><a href="{% url 'home'%}">Назад</a></p>
+<a href="{% url 'home'%}"><button onclick="{% url 'home'%}">Назад</button></a>
 {% endblock %}

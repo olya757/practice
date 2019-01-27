@@ -3,22 +3,25 @@
 
 {% block title %}
 {% if user.is_authenticated %}
-  Здравствуйте, {{user}}!
 
-  <p><a href="{% url 'logout' %}">Выйти</a></p>
+  <div class="moves"><a href="{% url 'logout' %}">Выйти</a></div>|<div class="moves"><a href="{% url 'home'%}">Назад</a></div>
+
+
 {% else %}
-  <p><a href="{% url 'login'%}" >Войти</a>|
-  <a href="{% url 'signup' %}">Регистрация</a>
+<div class="moves"><a href="{% url 'login'%}" >Войти</a></div>|<div class="moves">
+      <a href="{% url 'signup' %}">Регистрация</a></div>
 {%endif%}{% endblock %}
 
 {% block content %}
   <form method="post" action="{% url 'save' gc.id date %}">
     {% csrf_token %}
 
-    <div data-model-name="date">{{date}}</div>
-    <div data-model-name="gc" >{{gc}}</div>
-
-    <fieldset>
+    <p>Дата: {{date}}</p>
+    <p>Преподаватель: {{gc.curriculum.teacher}}</p>
+    <p>Предмет: {{gc.curriculum.subject}}</p>
+    <p>Группа: {{gc.group}}</p>
+      <p>Тип занятий: {{type}}</p>
+      <p>Семестр: {{gc.semester}}</p>
 
   {% if students %}
     <table>
@@ -42,8 +45,6 @@
   {% else%}
         Данных нет
   {% endif %}
-    </fieldset>
     <button type="submit">Сохранить</button>
 </form>
-<p><a href="{% url 'home'%}">Назад</a></p>
 {% endblock %}

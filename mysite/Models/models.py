@@ -69,8 +69,10 @@ class GroupCurriculum(models.Model):
     )
     type = models.IntegerField(choices=TYPE_OF_CLASS,default=2,verbose_name='Тип занятия')
 
+
+
     def __str__(self):
-        return str(self.curriculum)+'\n '+str(self.group)+'\n '+str(self.semester) + ' семестр\n' + self.TYPE_OF_CLASS[int(str(self.type))][1]
+        return str(self.curriculum)+'\n '+str(self.group)+'\n '+str(self.semester) + ' семестр\n' + self.TYPE_OF_CLASS[int(str(self.type))-1][1]
 
     def get_group(self):
         return self.group

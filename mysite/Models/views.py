@@ -41,15 +41,22 @@ def select_in_home(request):
         context = {
             'students': students,
             'date': date,
-            'gc': gc
+            'gc': gc,
+            'type': str(GroupCurriculum.TYPE_OF_CLASS[gc.type - 1][1])
         }
 
     else:
         template = loader.get_template('table.html')
         elems = Visit.objects.order_by('date')
         students = elems.filter(group_curriculum=gc)
-        print(students)
-        dates = set()
+        dates = list()
+        if students:
+            st = students.first()
+
+            for e in students:
+                if e.student == st.student:
+                    dates.append(e.date)
+            dates.sort()
 
         table = dict()
         for elem in students:
@@ -58,27 +65,21 @@ def select_in_home(request):
             else:
                 table[elem.student]=list()
                 table[elem.student].append(elem.visit)
-            dates.add(elem.date)
-        dates = list(dates)
-        dates.sort()
+        print(str(GroupCurriculum.TYPE_OF_CLASS[gc.type-1][1]))
         context = {
             'dates': dates,
             'values': table.items(),
-            'subject':str(gc)
+            'subject': gc,
+            'type':str(GroupCurriculum.TYPE_OF_CLASS[gc.type-1][1])
         }
-        for i in table.items():
-            print()
 
     return HttpResponse(template.render(context, request))
 
 
 def save(request, gc_id, date):
-    user = request.user
     gc = GroupCurriculum.objects.get(id=gc_id)
-    #date = request.POST['date']
     students = Student.objects.filter(group=gc.group)
     for st in students:
-        #print(request.POST(st.id))
         res = str(st.id) in request.POST
         print(res)
         visit = Visit()
@@ -87,7 +88,6 @@ def save(request, gc_id, date):
         visit.date = date
         visit.visit = res
         visit.save()
-    template = loader.get_template('home.html')
     return HttpResponseRedirect('../../home')
 
 
